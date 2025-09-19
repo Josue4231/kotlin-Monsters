@@ -17,6 +17,10 @@ var especeSpringleaf = EspeceMonstre (1,"Springleaf","Graine",9,
     34.0,"Petit monstre espiègle rond comme une graine, adore le soleil.",
     "Sa feuille sur la tête indique son humeur.","Curieux, amical, timide"
 )
+val zonemonstre= Zone(10,"Zone de monstres",10, mutableListOf(especeAquamy,especeFlamkip,especeSpringleaf))
+val route1=Zone(11,"Route",10)
+val route2=Zone(12,"autoroute",10)
+
 fun main() {
     println(changeCouleur("Hello","rouge"))
     println(changeCouleur("World","bleu"))
@@ -40,6 +44,21 @@ fun main() {
      println(especeAquamy.afficheArt())
     println(especeFlamkip.afficheArt())
     println(especeSpringleaf.afficheArt())
+    println("${zonemonstre.nom} : ${zonemonstre.zoneSuivante?.nom}")
+    route1.zoneSuivante = route2
+    route2.zonePrecedente = route1
+    val monstre1 = individuMonstre(1,"springleaf",especeSpringleaf,joueur,0.0)
+    val monstre2 = individuMonstre(2, "flamkip",  especeFlamkip,joueur,0.0)
+    val monstre3 = individuMonstre(3, "aquamy", especeAquamy,joueur,0.0)
+
+     println("Monstre 1 : ${monstre1.nom} : ${monstre1.espece.nom} : ${monstre1.experience} :${monstre1.entraineur?.nom}")
+    println("Monstre 2 : ${monstre2.nom} : ${monstre2.espece.nom}: ${monstre2.experience} : ${monstre2.entraineur?.nom}" )
+     println("Monstre 3 : ${monstre3.nom} : ${monstre3.espece.nom}: ${monstre3.experience} : ${monstre3.entraineur?.nom}")
+
+
+
+
+
 
 
 
