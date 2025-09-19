@@ -5,7 +5,7 @@ import kotlin.math.round
 
 class individuMonstre(
     val id: Int,
-    val nom: String,
+    var nom: String,
     val espece: EspeceMonstre,
     var entraineur: Entraineur? = null,
     expInit: Double
@@ -85,7 +85,30 @@ class individuMonstre(
 
         println("Level up ! Nouveau niveau : $niveau")
     }
-
+    fun attaquer(cible: individuMonstre) {
+        val degatsBruts = attaque - (cible.defense / 2)
+        val degats = if (degatsBruts < 1) 1 else degatsBruts
+        cible.pv -= degats
+        println("${nom} attaque ${cible.nom} et inflige $degats dégâts !")
+        println("${cible.nom} a maintenant ${cible.pv}/${cible.pvMax} PV.")
+    }
+    fun renommer() {
+        print("Entrez un nouveau nom pour ${nom} (laissez vide pour garder le même) : ")
+        val nouveauNom = readLine()?.trim() ?: ""
+        if (nouveauNom.isNotEmpty()) {
+            nom = nouveauNom
+            println("Le monstre a été renommé en $nom")
+        } else {
+            println("Le nom n'a pas été modifié.")
+        }
+    }
+    fun afficheDetail() {
+        println(
+            "Nom: $nom | Niveau: $niveau | Exp: ${"%.1f".format(experience)} | " +
+                    "PV: $pv/$pvMax | Atq: $attaque | Def: $defense | Vit: $vitesse | " +
+                    "AtqSpe: $attaqueSpe | DefSpe: $defenseSpe"
+        )
+    }
 }
 fun main() {
     val espece = EspeceMonstre(1,nom="Aquamy",type="Meteo",10,11,9,14,14,55,9.0,10.0,

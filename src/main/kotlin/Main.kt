@@ -21,6 +21,7 @@ val zonemonstre= Zone(10,"Zone de monstres",10, mutableListOf(especeAquamy,espec
 val route1=Zone(11,"Route",10)
 val route2=Zone(12,"autoroute",10)
 
+
 fun main() {
     println(changeCouleur("Hello","rouge"))
     println(changeCouleur("World","bleu"))
@@ -50,10 +51,23 @@ fun main() {
     val monstre1 = individuMonstre(1,"springleaf",especeSpringleaf,joueur,0.0)
     val monstre2 = individuMonstre(2, "flamkip",  especeFlamkip,joueur,0.0)
     val monstre3 = individuMonstre(3, "aquamy", especeAquamy,joueur,0.0)
-
      println("Monstre 1 : ${monstre1.nom} : ${monstre1.espece.nom} : ${monstre1.experience} :${monstre1.entraineur?.nom}")
     println("Monstre 2 : ${monstre2.nom} : ${monstre2.espece.nom}: ${monstre2.experience} : ${monstre2.entraineur?.nom}" )
      println("Monstre 3 : ${monstre3.nom} : ${monstre3.espece.nom}: ${monstre3.experience} : ${monstre3.entraineur?.nom}")
+    monstre1.attaquer(monstre2)
+    monstre2.attaquer(monstre1)
+    monstre1.attaquer(monstre3)
+    monstre3.attaquer(monstre1)
+    monstre1.renommer()
+    monstre2.renommer()
+    monstre3.renommer()
+    monstre1.afficheDetail()
+    monstre2.afficheDetail()
+    monstre3.afficheDetail()
+    val badge1 = Item.Badge(1, "Badge de Feu", "Obtient après avoir vaincu le champion du type Feu.")
+
+    badge1.afficherInfo()
+
 
 
 
