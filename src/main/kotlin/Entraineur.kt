@@ -8,7 +8,11 @@ class Entraineur {
         this.id = id
         this.nom = nom
         this.argent = argent
+        var equipeMonstre: MutableList<individuMonstre> = mutableListOf()
+        var boiteMonstre: MutableList<individuMonstre> = mutableListOf()
+
     }
+
     fun afficheDetail(){
         println("${this.id}")
         println("${this.nom}")

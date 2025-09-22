@@ -1,6 +1,7 @@
 package org.example
 
 import org.example.EspeceMonstre
+import org.example.Item.Badge1
 
 var joueur = Entraineur(1,"Sacha",100)
 var rival = Entraineur(2,"Regis",200)
@@ -64,9 +65,21 @@ fun main() {
     monstre1.afficheDetail()
     monstre2.afficheDetail()
     monstre3.afficheDetail()
-    val badge1 = Item.Badge(1, "Badge de Feu", "Obtient après avoir vaincu le champion du type Feu.")
+//    val badge1 = Item.Badge(1, "Badge de Feu", "Obtient après avoir vaincu le champion du type Feu.")
 
+    val badge1 = Item.Badge1(1, "Badge de Feu", "Obtient après avoir vaincu le champion du type Feu.",)
+    val championFeu = Entraineur(10, "Flamina", 15)
+    val badgeFeu =
+        Badge1.Badge(1, "Badge de Feu", "Obtenu après avoir vaincu le champion du type Feu.", championFeu)
+
+    println("Badge : ${badgeFeu.nom}")
+    println("Description : ${badgeFeu.description}")
+    println("Champion associé : ${badgeFeu.champion.nom}")
     badge1.afficherInfo()
+    badge1.afficherInfo()
+
+
+
 
 
 
