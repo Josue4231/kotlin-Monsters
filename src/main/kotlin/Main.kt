@@ -1,5 +1,6 @@
 package org.example
 
+import MonsterKube
 import org.example.EspeceMonstre
 import org.example.Item.Badge1
 
@@ -77,6 +78,36 @@ fun main() {
     println("Champion associé : ${badgeFeu.champion.nom}")
     badge1.afficherInfo()
     badge1.afficherInfo()
+    val v1 = MonsterKube(1, "Kube de monstre", "Un kube de monstre", 0.5)
+    v1.utiliser(IndividuMonstre("Individu de test", 10, 80))
+
+    val monstre = IndividuMonstre("Pikachu", 40, 100)
+
+    val potion = Potion(1, "Potion de soin", "Rend 30 PV", 30)
+    val kube = Kube(2, "Kube standard", "Permet de capturer un monstre")
+    val champion = Entraineur1("Ondine")
+    val badge = Badge(3, "Badge Cascade", "Gagné contre Ondine", champion)
+
+    println("=== Situation initiale ===")
+    println("${monstre.nom} : ${monstre.pv}/${monstre.pvMax} PV\n")
+
+    println("=== Utilisation de la potion ===")
+    potion.utiliser(monstre)
+
+    println("\n=== Utilisation du kube ===")
+    kube.utiliser(monstre)
+
+    println("\n=== Tentative d’utilisation du badge ===")
+
+
+    println("\n=== Liste des objets utilisables ===")
+    val objets: List<utilisable> = listOf(potion, kube)
+    for (objet in objets) {
+        objet.utiliser(monstre)
+    }
+
+    val v3 = MonsterKube(1, "Kube de monstre", "Un kube de monstre", 0.5)
+    v1.utiliser(IndividuMonstre("Individu de test", 10, 80))
 
 
 

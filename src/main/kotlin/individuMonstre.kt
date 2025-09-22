@@ -103,12 +103,42 @@ class individuMonstre(
         }
     }
     fun afficheDetail() {
-        println(
-            "Nom: $nom | Niveau: $niveau | Exp: ${"%.1f".format(experience)} | " +
-                    "PV: $pv/$pvMax | Atq: $attaque | Def: $defense | Vit: $vitesse | " +
-                    "AtqSpe: $attaqueSpe | DefSpe: $defenseSpe"
+        // 1. Récupérer l’art ASCII et normaliser les retours à la ligne
+        val art = espece.afficheArt().replace("\r\n", "\n").replace("\r", "\n")
+        val artLines = art.lines()
+
+        // 2. Construire les détails (statistiques complètes)
+        val details = listOf(
+            "Nom : $nom",
+            "Espèce : ${espece.nom}",
+            "Type : ${espece.type}",
+            "Niveau : $niveau",
+            "PV : $pv/$pvMax",
+            "Attaque : $attaque",
+            "Défense : $defense",
+            "Vitesse : $vitesse",
+            "Attaque Spé : $attaqueSpe",
+            "Défense Spé : $defenseSpe",
+            "Expérience : ${"%.2f".format(experience)}",
+            "Entraîneur : ${entraineur?.nom ?: "Aucun"}"
         )
+
+        // 3. Largeur max de l’art (ignorer les codes couleur ANSI pour le calcul)
+        val ansiRegex = "\u001B\\[[;\\d]*m".toRegex()
+        val maxArtWidth = artLines.maxOfOrNull { it.replace(ansiRegex, "").length } ?: 0
+
+        // 4. Nombre total de lignes à afficher
+        val maxLines = maxOf(artLines.size, details.size)
+
+        // 5. Affichage côte à côte
+        for (i in 0 until maxLines) {
+            val artLine = if (i < artLines.size) artLines[i] else ""
+            val detailLine = if (i < details.size) details[i] else ""
+            val paddedArt = artLine.padEnd(maxArtWidth + 4)
+            println(paddedArt + detailLine)
+        }
     }
+
 }
 fun main() {
     val espece = EspeceMonstre(1,nom="Aquamy",type="Meteo",10,11,9,14,14,55,9.0,10.0,

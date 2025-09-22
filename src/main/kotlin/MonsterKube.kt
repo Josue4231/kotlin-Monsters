@@ -24,8 +24,8 @@ class MonsterKube(
 
 
 fun main() {
-    val v1 = MonsterKube(1, "Kube de monstre", "Un kube de monstre", 0.5)
-    v1.utiliser(IndividuMonstre("Individu de test", 10, 80))
+    val v3 = MonsterKube(1, "Kube de monstre", "Un kube de monstre", 0.5)
+    v3.utiliser(IndividuMonstre("Individu de test", 10, 80))
 
 }
 
