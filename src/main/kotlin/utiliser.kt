@@ -9,8 +9,8 @@
 //// Classe Entraineur
 //class Entraineur1(val nom: String)
 //
-//// Classe Badge (pas utilisable)
-//class Badge(id: Int, nom: String, description: String, val champion: Entraineur1) : Item(id, nom, description)
+//// Classe item.Badge (pas utilisable)
+//class item.Badge(id: Int, nom: String, description: String, val champion: Entraineur1) : Item(id, nom, description)
 //
 //// Classe Potion (utilisable)
 //class Potion(id: Int, nom: String, description: String, val effet: String) : Item(id, nom, description), Utilisable {
@@ -23,13 +23,13 @@
 //        println("Vous utilisez un kube pour capturer un monstre.")
 //    }
 //}
-//fun main(){
+//fun item.jeu.main(){
 //
 //
 //        val potion = Potion(1, "Potion de soin", "Rend 20 PV", "Restaure 20 PV")
 //        val kube = Kube(2, "Kube standard", "Permet de capturer un monstre.")
 //        val champion = Entraineur1("Roxane")
-//        val badge = Badge(3, "Badge Roche", "Gagné contre Roxane", champion)
+//        val badge = item.Badge(3, "item.Badge Roche", "Gagné contre Roxane", champion)
 //        // Liste d'objets avec polymorphisme sur l'interface Utilisable
 //        val objetsUtilisables: List<Utilisable> = listOf(potion, kube)
 //

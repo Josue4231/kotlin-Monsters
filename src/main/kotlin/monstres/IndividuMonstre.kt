@@ -1,9 +1,10 @@
 package org.example
 
+import dresseur.Entraineur
 import kotlin.random.Random
 import kotlin.math.round
 
-class individuMonstre(
+class IndividuMonstre(
     val id: Int,
     var nom: String,
     val espece: EspeceMonstre,
@@ -85,7 +86,7 @@ class individuMonstre(
 
         println("Level up ! Nouveau niveau : $niveau")
     }
-    fun attaquer(cible: individuMonstre) {
+    fun attaquer(cible: IndividuMonstre) {
         val degatsBruts = attaque - (cible.defense / 2)
         val degats = if (degatsBruts < 1) 1 else degatsBruts
         cible.pv -= degats
@@ -140,15 +141,14 @@ class individuMonstre(
     }
 
 }
+/*
 fun main() {
-    val espece = EspeceMonstre(1,nom="Aquamy",type="Meteo",10,11,9,14,14,55,9.0,10.0,
-        7.5,12.0,12.0,27.0,"Créature vaporeuse semblable à un nuage, produit des gouttes pures.",
-        "Fait baisser la température en s’endormant.","Calme, rêveur, mystérieux")
 
-    val monstre = individuMonstre(
+
+    val monstre = IndividuMonstre(
         id = 1,
         nom = "Drako",
-        espece = espece,
+        espece = especeDrako,
         expInit = 0.0
     )
 
@@ -160,7 +160,7 @@ fun main() {
     println("Niveau après gain d'expérience: ${monstre.niveau}")
     println("Stats après level up: ATQ ${monstre.attaque}, PV ${monstre.pv}/${monstre.pvMax}")
 }
-
+*/
 
 
 

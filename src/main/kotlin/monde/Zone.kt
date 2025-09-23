@@ -1,5 +1,6 @@
-package org.example
+package monde
 
+import org.example.EspeceMonstre
 
 class Zone(
     val id: Int,
@@ -19,4 +20,3 @@ class Zone(
         // À implémenter
     }
 }
-
