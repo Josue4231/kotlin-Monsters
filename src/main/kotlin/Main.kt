@@ -1,7 +1,7 @@
 package org.example
-
 import dresseur.Entraineur
 import item.MonsterKube
+import jeu.CombatMonstre
 import monde.Zone
 import org.example.Item.Badge
 // Entraineurs
@@ -25,9 +25,28 @@ val especeDrako = EspeceMonstre(1,nom="Aquamy",type="Dragon",10,11,9,14,14,55,9.
     "Fait baisser la température en s’endormant.","Calme, rêveur, mystérieux")
 
 //Zones
-val zonemonstre= Zone(10, "Zone de monstres", 10, mutableListOf(especeAquamy, especeFlamkip, especeSpringleaf))
-val route1= Zone(11, "Route", 10)
-val route2= Zone(12, "autoroute", 10)
+
+val zonemonstre = Zone(
+    id = 10,
+    nom = "Zone de monstres",
+    expZone = 10,
+    joueur = joueur,
+    especesMonstres = mutableListOf(especeAquamy, especeFlamkip, especeSpringleaf)
+)
+
+val route1 = Zone(
+    id = 11,
+    nom = "Route",
+    expZone = 10,
+    joueur = joueur
+)
+
+val route2 = Zone(
+    id = 12,
+    nom = "autoroute",
+    expZone = 10,
+    joueur = joueur
+)
 
 //items
 val kube = MonsterKube(2, "Kube standard", "Permet de capturer un monstre",30.0)
@@ -129,20 +148,81 @@ fun main() {
 
     joueur.SacAItems.add(kubeFeu)
 
+    val monstre = IndividuMonstre(
+        id = 1,
+        nom = "Drako",
+        espece = especeDrako,
+        expInit = 0.0
+    )
 
 
 
 
+    println("=== Situation initiale ===")
+    println("${monstre.nom} : ${monstre.pv}/${monstre.pvMax} PV\n")
 
 
 
+    println("\n=== Utilisation du kube ===")
+    org.example.kube.utiliser(monstre)
+
+    println("\n=== Tentative d’utilisation du badge ===")
 
 
+    println("\n=== Liste des objets utilisables ===")
+    val objetse: List<utilisable> = listOf(org.example.kube)
+    for (objet in objetse) {
+        objet.utiliser(monstre)
+    }
+    // Création des espèces de monstres
 
 
+    // Création des monstres individuels avec PV (par exemple 100)
+    // Initialisation des monstres et du joueur (à adapter selon ton code)
+    val monstreJoueur = IndividuMonstre(5, "Pika", especeFlamkip, joueur, expInit = 0.0).apply {
+        pv = 100
+        pvMax = 100
+        vitesse = 30
+    }
+
+    val monstreSauvage = IndividuMonstre(1, "Aqaman", especeAquamy, expInit = 0.0).apply {
+        pv = 100
+        pvMax = 100
+        vitesse = 25
+    }
+
+    joueur.equipeMonstre.add(monstreJoueur)
+    val combat = CombatMonstre(monstreJoueur, monstreSauvage)
+    println("Début du combat entre ${monstreJoueur.nom} et ${monstreSauvage.nom}")
+
+    // Boucle principale du combat utilisant jouer()
+    while (true) {
+        combat.jouer()  // Fait jouer les deux monstres
+
+        if (combat.gameOver()) {
+            println("Le ${monstreSauvage.nom} a perdu le combat.")
+            break
+        }
+
+        if (combat.joueurGagne()) {
+            println("Le ${monstreJoueur.nom} a gagné le combat !")
+            break
+        }
+
+        combat.round++
+    }
 
 
+    // Lance le combat avec la méthode dédiée
+    combat.lanceCombat()
+
+    println("Fin du combat.")
 }
+
+
+
+
+
 fun changeCouleur(message: String, couleur:String=""): String {
     val reset = "\u001B[0m"
     val codeCouleur = when (couleur.lowercase()) {

@@ -6,10 +6,16 @@ import org.example.especeAquamy
 import org.example.especeFlamkip
 import org.example.joueur
 import org.example.utilisable
-
+data class espece(
+    val nom: String,
+    val asciiFace: String,
+    val asciiDos: String,
+    val pvMaxBase: Int
+)
 class CombatMonstre(
     val monstreJoueur: IndividuMonstre,
     val monstreSauvage: IndividuMonstre
+
 ) {
     var round: Int = 1
     var monstreCapture: Boolean = false
@@ -40,8 +46,7 @@ class CombatMonstre(
             return true
         }
         if (monstreSauvage.pv <= 0) {
-            // Ici tu peux éventuellement ajouter du gain d'expérience
-            // monstreJoueur.gagnerExperience(...)
+
             return true
         }
         return false
@@ -53,20 +58,17 @@ class CombatMonstre(
     fun capturerMonstre() {
         monstreCapture = true
     }
+
     fun actionAdversaire() {
         if (monstreSauvage.pv > 0) {
-
-            val degats = 10
-            monstreJoueur.pv -= degats
-
-            if (monstreJoueur.pv < 0) monstreJoueur.pv = 0
-
-            println("${monstreSauvage.nom} attaque ${monstreJoueur.nom} et inflige $degats dégâts !")
+            monstreSauvage.attaquer(monstreJoueur)
+            println("${monstreSauvage.nom} attaque ${monstreJoueur.nom} !")
             println("${monstreJoueur.nom} a maintenant ${monstreJoueur.pv} PV.")
         } else {
             println("${monstreSauvage.nom} ne peut pas attaquer car il est KO.")
         }
     }
+
     fun actionJoueur(): Boolean {
         if (gameOver()) return false
 
@@ -157,56 +159,191 @@ class CombatMonstre(
         }
     }
 
-}
-fun main() {
+    fun afficheCombat() {
+        println("===================================")
+        println(" Début du round $round")
+        println("===================================")
+        // Monstre sauvage (en haut)
+        println("Monstre sauvage : ${monstreSauvage.nom}")
+        println("Niveau : ${monstreSauvage.niveau}")
+        println("PV : ${monstreSauvage.pv} / ${monstreSauvage.pvMax}")
+//        println(monstreSauvage.espece.asciiFace)
+//        println(monstreSauvage.espece.asciiDace)
 
-
-
-    // Création des espèces de monstres
-
-
-    // Création des monstres individuels avec PV (par exemple 100)
-    val monstreJoueur = IndividuMonstre(5, "Pika", especeFlamkip, joueur, expInit = 0.0 ).apply {
-        pv = 100
+        println()
+        //Monstre Joeuer
+        println(" Monstre Joueur : ${monstreJoueur.nom}")
+        println("Niveau : ${monstreJoueur.niveau}")
+        println("PV : ${monstreJoueur.pv} / ${monstreJoueur.pvMax}")
     }
-    val monstreSauvage = IndividuMonstre(1, "Aqaman", especeAquamy, expInit = 0.0).apply {
-        pv = 100
+    fun jouer() {
+        if (monstreJoueur.vitesse >= monstreSauvage.vitesse) {
+            // Le monstre du joueur agit en premier
+            if (!this.actionJoueur()) {
+                return  // Si actionJoueur() retourne false, on arrête le tour
+            }
+            // Si combat toujours en cours, le monstre sauvage agit
+            if (!monstreCapture && monstreSauvage.pv > 0) {
+                this.actionAdversaire()
+            }
+        } else {
+            // Le monstre sauvage agit en premier
+            if (monstreSauvage.pv > 0) {
+                this.actionAdversaire()
+            }
+            // Si le joueur n'est pas KO, il agit ensuite
+            if (!this.gameOver()) {
+                if (!this.actionJoueur()) {
+                    return
+                }
+            }
+        }
     }
-    joueur.equipeMonstre.add(monstreJoueur)
-    // Création du combat
-    val combat = CombatMonstre(monstreJoueur, monstreSauvage)
-
-    // Affichage état initial
-    println("Combat débuté entre ${monstreJoueur.nom} et ${monstreSauvage.nom}")
-    println("Le joueur a perdu ? ${combat.gameOver()}")
-    println("Le joueur a gagné ? ${combat.joueurGagne()}")
-
-    // Simulons une attaque qui met KO le monstre sauvage
-    monstreSauvage.pv = 0
-    println("\nAprès avoir mis KO le monstre sauvage:")
-    println("Le joueur a perdu ? ${combat.gameOver()}")
-    println("Le joueur a gagné ? ${combat.joueurGagne()}")
-
-    // Simulons que le joueur est mis KO
-    monstreJoueur.pv = 0
-    println("\nAprès que le joueur est KO:")
-    println("Le joueur a perdu ? ${combat.gameOver()}")
-    println("Le joueur a gagné ? ${combat.joueurGagne()}")
-
-    // Simulons capture du monstre sauvage
-    monstreJoueur.pv = 100 // joueur vivant
-    monstreSauvage.pv = 50 // monstre sauvage pas KO
-    combat.capturerMonstre()
-    println("\nAprès capture du monstre sauvage:")
-    println("Le joueur a perdu ? ${combat.gameOver()}")
-    println("Le joueur a gagné ? ${combat.joueurGagne()}")
-
-    combat.actionAdversaire()
-
-    // Affichage du statut
-    println("Le joueur a perdu ? ${combat.gameOver()}")
-    println("Le joueur a gagné ? ${combat.joueurGagne()}")
+    fun lanceCombat() {
+        while (!gameOver() && !joueurGagne()) {
+            this.jouer()
+            println("======== Fin du Round : $round ========")
+            round++
+        }
+        if (gameOver()) {
+            joueur.equipeMonstre.forEach { it.pv = it.pvMax }
+            println("Game Over !")
+        }
+    }
 
 }
+
+
+
+
+        fun main() {
+            // Assure-toi que especeFlamkip, especeAquamy et joueur sont initialisés
+
+//            val monstreJoueur = IndividuMonstre(5, "Pika", especeFlamkip, joueur, expInit = 0.0).apply {
+//                pv = 100
+//                pvMax = 100
+//            }
+//
+//            val monstreSauvage = IndividuMonstre(1, "Aqaman", especeAquamy, expInit = 0.0).apply {
+//                pv = 100
+//                pvMax = 100
+//            }
+//
+//            joueur.equipeMonstre.add(monstreJoueur)
+//
+//            val combat = CombatMonstre(monstreJoueur, monstreSauvage)
+//
+//            println("Combat débuté entre ${monstreJoueur.nom} et ${monstreSauvage.nom}")
+//
+//            // Tests simulés...
+//
+//            // Remettre les PV à fond pour combat réel
+//            monstreJoueur.pv = 100
+//            monstreSauvage.pv = 100
+//
+//            while (true) {
+//                combat.afficheCombat()
+//
+//                if (!combat.actionJoueur()) break
+//                if (combat.joueurGagne()) break
+//
+//                combat.actionAdversaire()
+//
+//                if (combat.gameOver()) break
+//
+//                combat.round++
+//            }
+//
+//            println("\nFin du combat !")
+//            if (combat.joueurGagne()) println("Le joueur a gagné !")
+//            else if (combat.gameOver()) println("Le joueur a perdu !")
+//            else println("Combat interrompu.")
+//        }
+//            val monstreJoueur = IndividuMonstre(5, "Pika", especeFlamkip, joueur, expInit = 0.0).apply {
+//                pv = 100
+//                pvMax = 100
+//                vitesse = 30
+//            }
+//
+//            val monstreSauvage = IndividuMonstre(1, "Aqaman", especeAquamy, expInit = 0.0).apply {
+//                pv = 100
+//                pvMax = 100
+//                vitesse = 25
+//            }
+//
+//            joueur.equipeMonstre.add(monstreJoueur)
+//
+//            val combat = CombatMonstre(monstreJoueur, monstreSauvage)
+//
+//            println("Début du combat entre ${monstreJoueur.nom} et ${monstreSauvage.nom}")
+//
+//            // Boucle principale du combat utilisant jouer()
+//            while (true) {
+//                combat.jouer()  // Fait jouer les deux monstres
+//
+//                if (combat.gameOver()) {
+//                    println("Le joueur a perdu le combat.")
+//                    break
+//                }
+//
+//                if (combat.joueurGagne()) {
+//                    println("Le joueur a gagné le combat !")
+//                    break
+//                }
+//
+//                combat.round++
+//            }
+//            combat.lanceCombat()
+//
+//            println("Fin du combat.")
+
+
+                // Initialisation des monstres et du joueur (à adapter selon ton code)
+                val monstreJoueur = IndividuMonstre(5, "Pika", especeFlamkip, joueur, expInit = 0.0).apply {
+                    pv = 100
+                    pvMax = 100
+                    vitesse = 30
+                }
+
+                val monstreSauvage = IndividuMonstre(1, "Aqaman", especeAquamy, expInit = 0.0).apply {
+                    pv = 100
+                    pvMax = 100
+                    vitesse = 25
+                }
+
+                joueur.equipeMonstre.add(monstreJoueur)
+                val combat = CombatMonstre(monstreJoueur, monstreSauvage)
+                println("Début du combat entre ${monstreJoueur.nom} et ${monstreSauvage.nom}")
+
+            // Boucle principale du combat utilisant jouer()
+            while (true) {
+                combat.jouer()  // Fait jouer les deux monstres
+
+                if (combat.gameOver()) {
+                    println("Le joueur a perdu le combat.")
+                    break
+                }
+
+                if (combat.joueurGagne()) {
+                    println("Le joueur a gagné le combat !")
+                    break
+                }
+
+                combat.round++
+            }
+
+                println("Combat débuté entre ${monstreJoueur.nom} et ${monstreSauvage.nom}")
+
+                // Lance le combat avec la méthode dédiée
+                combat.lanceCombat()
+
+                println("Fin du combat.")
+            }
+
+
+
+
+
+
 
 
