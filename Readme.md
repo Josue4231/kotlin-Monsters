@@ -24,3 +24,6 @@
 - Tests : JUnit
 - Persistance : JDBC
 - Interface : Console texte avec ASCII Art
+
+## Compte Rendu 
+Pour le sprint 1 voir le compte rendu dans le dossier kotlinMonsters/docs/compte.rendu.md
