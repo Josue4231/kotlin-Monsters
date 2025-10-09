@@ -1,4 +1,5 @@
 package org.example
+import Joueur
 import dresseur.Entraineur
 import item.MonsterKube
 import jeu.CombatMonstre
@@ -217,6 +218,52 @@ fun main() {
     combat.lanceCombat()
 
     println("Fin du combat.")
+
+    val especeFlamkip = EspeceMonstre(
+        id = 1,
+        nom = "Flamkip",
+        baseVitesse = 10,
+        basePv = 50,
+        baseAttaque = 20,
+        description = "Un monstre de feu vif."
+    )
+
+    val especeAquamy = EspeceMonstre(
+        id = 2,
+        nom = "Aquamy",
+        baseVitesse = 8,
+        basePv = 60,
+        baseDefense = 15,
+        description = "Un monstre aquatique calme."
+    )
+
+    val joueur = Joueur().apply {
+        equipeMonstre.add(
+            IndividuMonstre(
+                id= 5,
+                nom = "Flamkip",
+                espece = especeFlamkip,
+                expInit = 3.0
+            ).apply {
+                pv = 100
+                pvMax = 100
+            }
+        )
+    }
+
+    val zone = Zone(
+        id = 1,
+        nom = "Forêt Mystique",
+        expZone = 100,
+        especesMonstres = mutableListOf(especeFlamkip, especeAquamy),
+        joueur = org.example.joueur
+    )
+
+    val monstresSauvage = zone.genereMonstre()
+    println("Monstre sauvage généré : ${monstreSauvage.nom}, Niveau : ${monstreSauvage.niveau}, PV : ${monstreSauvage.pv}")
+
+    // Lancer une rencontre
+    zone.rencontreMonstre()
 }
 
 

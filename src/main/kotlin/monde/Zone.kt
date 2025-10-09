@@ -10,10 +10,10 @@ class Zone(
     val id: Int,
     val nom: String,
     val expZone: Int,
-    val joueur: Joueur,
     val especesMonstres: MutableList<EspeceMonstre> = mutableListOf(),
     var zoneSuivante: Zone? = null,
     var zonePrecedente: Zone? = null,
+    val joueur: Entraineur
 ) {
     fun genereMonstre(): IndividuMonstre {
         val especeChoisie = especesMonstres.random()
@@ -87,8 +87,8 @@ fun main() {
         id = 1,
         nom = "Forêt Mystique",
         expZone = 100,
-        joueur =joueur,
         especesMonstres = mutableListOf(especeFlamkip, especeAquamy),
+        joueur = org.example.joueur
     )
 
     val monstreSauvage = zone.genereMonstre()
