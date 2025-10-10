@@ -11,7 +11,11 @@
 
 ## Fonctionnalités principales (par sprint)
 - **Sprint 1** : déplacements, rencontres et combats contre monstres sauvages, gestion d’équipe, utilisation d’objets.
+  https://github.com/Josue4231/kotlin-Monsters
+
 - **Sprint 2** : combats contre dresseurs, achat d’objets, évolution et apprentissage de techniques, gestion des éléments et effets de statut.
+  https://github.com/Josue4231/Kotlin-Monsters-Sprint2
+
 - **Sprint 3** : intégration de base de données via JDBC, gestion des sauvegardes.
 
 ## Technologies utilisées
@@ -20,3 +24,6 @@
 - Tests : JUnit
 - Persistance : JDBC
 - Interface : Console texte avec ASCII Art
+
+## Compte Rendu 
+Pour le sprint 1 voir le compte rendu dans le dossier kotlinMonsters/docs/compte.rendu.md
