@@ -17,6 +17,7 @@
   https://github.com/Josue4231/Kotlin-Monsters-Sprint2
 
 - **Sprint 3** : intégration de base de données via JDBC, gestion des sauvegardes.
+  https://github.com/Josue4231/Kotlin-Monsters-Sprint3
 
 ## Technologies utilisées
 - Langage : Kotlin
