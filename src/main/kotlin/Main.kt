@@ -1,4 +1,5 @@
 
+import dao.EntraineursDAO
 import dresseur.Entraineur
 import item.MonsterKube
 import jdbc.BDD
@@ -8,6 +9,22 @@ import org.example.Item.Badge
 
 // Vérifier que le projet peut être lancé sans erreurs puis au début du fichier Main.kt ajouter cette ligne.
 val db = BDD()
+//La connexion a la BDD
+val db = BDD()
+//Les DAO
+val entraineurDAO= EntraineursDAO(db)
+
+//Toujours dans le Main.kt dans la fonction nouvellePartie() juste avant le return ajouter les lignes suivantes.
+fun nouvellePartie(): Entraineur {
+    joueur.nom = "Sacha"
+    joueur.id = 0
+    entraineurDAO.save(joueur)
+
+    return joueur
+}
+
+//Les listes
+val listeEntraineur = entraineurDAO.findAll()
 // Entraineurs
 var joueur = Entraineur(1, "Sacha", 100)
 var rival = Entraineur(2, "Regis", 200)
@@ -275,14 +292,10 @@ fun main() {
     // Lancer une rencontre
     zone.rencontreMonstre()
     // Dans le main()  avant de faire partie.jouer() ajoute cette ligne :
-    db.close()
+//    db.close()
+    //La connexion a la BDD
+
 }
-
-
-
-
-
-
 
 
 fun changeCouleur(message: String, couleur:String=""): String {

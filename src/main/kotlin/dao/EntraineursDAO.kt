@@ -7,7 +7,7 @@ import java.sql.SQLException
 import java.sql.Statement
 
 
-private val Entraineur.argents: Int
+
 
 /**
  * DAO (Data Access Object) permettant d'interagir avec la table `Entraineurs`.
@@ -112,13 +112,13 @@ fun findAll(): MutableList<Entraineur> {
             val sql = "INSERT INTO Entraineurs (nom, argents) VALUES (?, ?)"
             requetePreparer = bdd.connectionBDD!!.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
             requetePreparer.setString(1, entraineur.nom)
-            requetePreparer.setInt(2, entraineur.argents)
+            requetePreparer.setInt(2, entraineur.argent)
         } else {
             // Mise à jour
             val sql = "UPDATE Entraineurs SET nom = ?, argents = ? WHERE id = ?"
             requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
             requetePreparer.setString(1, entraineur.nom)
-            requetePreparer.setInt(2, entraineur.argents)
+            requetePreparer.setInt(2, entraineur.argent)
             requetePreparer.setInt(3, entraineur.id)
         }
 
