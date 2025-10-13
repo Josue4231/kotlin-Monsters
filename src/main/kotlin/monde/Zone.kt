@@ -3,6 +3,7 @@ package monde
 import Joueur
 import dresseur.Entraineur
 import jeu.CombatMonstre
+import joueur
 import org.example.EspeceMonstre
 import org.example.IndividuMonstre
 
@@ -68,7 +69,7 @@ fun main() {
         baseDefense = 15,
         description = "Un monstre aquatique calme."
     )
-
+/**
     val joueur = Joueur().apply {
         equipeMonstre.add(
             IndividuMonstre(
@@ -81,14 +82,14 @@ fun main() {
                 pvMax = 100
             }
         )
-    }
+    }**/
 
     val zone = Zone(
         id = 1,
         nom = "Forêt Mystique",
         expZone = 100,
         especesMonstres = mutableListOf(especeFlamkip, especeAquamy),
-        joueur = org.example.joueur
+        joueur = joueur
     )
 
     val monstreSauvage = zone.genereMonstre()

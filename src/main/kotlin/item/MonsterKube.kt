@@ -2,7 +2,7 @@ package item
 
 import org.example.IndividuMonstre
 import org.example.Item
-import org.example.especeDrako
+import especeDrako
 
 import org.example.utilisable
 

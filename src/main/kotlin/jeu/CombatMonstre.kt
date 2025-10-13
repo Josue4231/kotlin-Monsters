@@ -2,9 +2,9 @@ package jeu
 
 import org.example.IndividuMonstre
 import org.example.Item
-import org.example.especeAquamy
-import org.example.especeFlamkip
-import org.example.joueur
+import especeAquamy
+import especeFlamkip
+import joueur
 import org.example.utilisable
 data class espece(
     val nom: String,
